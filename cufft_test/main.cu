@@ -8,8 +8,9 @@
 #include "../utils/utils.h"
 #include "../utils/matutils.h"
 
-
 #include "omp.h"
+
+#include "./include/tools.h"
 
 __global__ void julia_kernel( int n, double *a, double *b, double *c  ){
 
@@ -45,7 +46,7 @@ int main( int argc, char**  argv  ){
 	// Creating matrices - using two vectors
 	std::cout << "PI number: "<< M_PI << std::endl;
 	
-	int size_m = 8;
+	int size_m = 16;
 	int size_n = 8;
 
 	double *x_n = new double[size_m * size_n]; 
@@ -53,18 +54,10 @@ int main( int argc, char**  argv  ){
 	double *m_line = new double[size_m];
 	double *n_line = new double[size_n];
 
-	double k = 1;
-	double N = (double)size_m;
-	for (int n=0; n<N; n++){
-		m_line[n] = cos(2*M_PI*k*(n/ (N-1.0)));		
-	}
+	// Fill and Print	
+	fill_vector_cos(1, size_m, m_line);
+	print_array(m_line, size_m);
 
-
-	std::cout << "data" << std::endl;
-	for (int n=0; n<N; n++){
-	 	std::cout << m_line[n] << std::endl;		
-	}
-	
 	delete x_n;
 	delete m_line;
 	delete n_line;
