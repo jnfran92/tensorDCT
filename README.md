@@ -1,8 +1,11 @@
 # tensorDCT
 Discrete Cosine Transform optimized by using NVIDIA Tensorcore
 
-## On Ubuntu:
-BLAS and LAPACK can be installed in one command:
+## Info
+ 
+### About cufft_test fodler
+
+On Ubuntu, BLAS and LAPACK can be installed in one command:
 	
 		sudo apt-get install liblapack-dev -y ; sudo apt-get install liblapack3 -y ; sudo apt-get install libopenblas-base -y ; sudo apt-get install libopenblas-dev -y ;
 
