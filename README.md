@@ -3,7 +3,7 @@ Discrete Cosine Transform optimized by using NVIDIA Tensorcore
 
 ## Info
  
-### About cufft_test fodler
+### About cufft_test folder
 
 On Ubuntu, BLAS and LAPACK can be installed in one command:
 	
