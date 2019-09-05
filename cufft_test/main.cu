@@ -1,11 +1,12 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <fftw3.h>
 
 //CBLAS
 extern "C"
 {
-	   #include <cblas.h>
+	#include <cblas.h>
 }
 
 
@@ -17,6 +18,7 @@ extern "C"
 
 #include "omp.h"
 
+// custom headers
 #include "./include/tools.h"
 
 /*__global__ void julia_kernel( int n, double *a, double *b, double *c  ){*/
