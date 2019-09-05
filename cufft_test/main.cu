@@ -91,6 +91,41 @@ int main( int argc, char**  argv  ){
 	print_array(x_n, 16*16);
 
 
+	/*
+	   FFTW
+	*/
+	// FFTW one dimension using m_line
+	fftw_complex *data_in, *data_out;
+	fftw_plan p;
+	// allocating data
+	data_in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * size_m);	
+	data_out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * size_m);
+	
+	// fill data
+	for (int i=0; i<size_m; i++){
+		data_in[0][i] = m_line[i]; 	// real data
+		data_in[1][i] = 0.0; 		// imaginary data
+	}
+	
+	// executing fft	
+	p = fftw_plan_dft_1d(size_m, data_in, data_out, FFTW_FORWARD, FFTW_ESTIMATE);
+	fftw_execute(p);
+
+
+	std::cout << "results " << std::endl;
+	// fill data
+	for (int i=0; i<size_m; i++){
+		/*data_in[0][i] = m_line[i]; 	// real data*/
+		/*data_in[1][i] = 0.0; 		// imaginary data*/
+		std::cout << data_out[0][i] << " - "<< data_out[1][i] << std::endl;
+	}
+
+
+	// free data
+	fftw_destroy_plan(p);
+	fftw_free(data_in);
+	fftw_free(data_out);
+	
 	
 
 
