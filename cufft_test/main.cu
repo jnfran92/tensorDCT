@@ -62,7 +62,7 @@ int main( int argc, char**  argv  ){
 	double *n_line = new double[size_n];
 
 	// Fill and Print	
-	fill_vector_cos(1, size_m, m_line);
+	fill_vector_cos(2, size_m, m_line);
 	fill_vector_cos(2, size_n, n_line);
 	
 	print_array(m_line, size_m);
@@ -87,6 +87,10 @@ int main( int argc, char**  argv  ){
 			   );	
 	
 	print_array(x_n, 16*16);
+
+
+	
+
 
 	delete x_n;
 	delete m_line;
