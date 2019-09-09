@@ -7,6 +7,8 @@ Test status:
 
 - test_1 `matmul_fft_bases.cu` : Matrix multipliaction using `cblas` is working fine: vectors product to generate the Fourier Bases :white_check_mark:
 
+- test_2 `fftw_1d`: 1D fftw performace 
+
 ## Notes
 
 To install FFTW:
