@@ -5,7 +5,7 @@ Each test is verified with data generated in Python.
 
 Test status:
 
-- `matmul_1d_2d`: Matrix multipliaction using `cblas` is working fine: vectors product to generate the Fourier Bases :white_check_mark:
+- test_1 `matmul_fft_bases.cu` : Matrix multipliaction using `cblas` is working fine: vectors product to generate the Fourier Bases :white_check_mark:
 
 ## Notes
 
