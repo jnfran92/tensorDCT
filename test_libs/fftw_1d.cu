@@ -54,7 +54,7 @@ int main( int argc, char**  argv  ){
 	double *n_line = new double[size_n];
 
 	// Fill and Print	
-	fill_vector_cos(3, size_m, m_line);
+	fill_vector_cos(2, size_m, m_line);
 	fill_vector_cos(2, size_n, n_line);
 	
 	print_array(m_line, size_m);
@@ -73,9 +73,9 @@ int main( int argc, char**  argv  ){
 	// fill data
 	std::cout<< "Data in FFTW" << std::endl;
 	for (int i=0; i<size_m; i++){
-		data_in[0][i] = m_line[i]; 	// real data
-		data_in[1][i] = 0.0; 		// imaginary data
-		std::cout << data_in[0][i] << " - "<< data_in[1][i] << std::endl;
+		data_in[i][0] = m_line[i]; 	// real data
+		data_in[i][1] = 0.0; 		// imaginary data
+		std::cout << data_in[i][0] << " - "<< data_in[i][1] << std::endl;
 	}
 	
 	// executing fft	
@@ -90,7 +90,7 @@ int main( int argc, char**  argv  ){
 	for (int i=0; i<size_m; i++){
 		/*data_in[0][i] = m_line[i]; 	// real data*/
 		/*data_in[1][i] = 0.0; 		// imaginary data*/
-		std::cout << data_out[0][i] << " - "<< data_out[1][i] << std::endl;
+		std::cout << data_out[i][0] << " - "<< data_out[i][1] << std::endl;
 	}
 
 
