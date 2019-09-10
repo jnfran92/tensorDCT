@@ -4,7 +4,7 @@ OPT_FLAG = -O3
 OPEN_MP_FALG = -Xcompiler -fopenmp
 # BLAS LAPACK FFT libs
 LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lm 
-#CUDA_LIBS = 
+CUDA_LIBS = -lcublas 
 
 all: test1
 
@@ -19,4 +19,4 @@ test_3: fftw_2d.cu
 		$(CC) $(OPT_FLAG) $(OPEN_MP_FALG) $(LIBS) fftw_2d.cu -o ./build/t3
 
 test_4: matmul_cublas.cu
-		$(CC) $(OPT_FLAG) $(OPEN_MP_FALG) $(LIBS) matmul_cublas.cu -o ./build/t4
+		$(CC) $(OPT_FLAG) $(OPEN_MP_FALG) $(LIBS) $(CUDA_LIBS) matmul_cublas.cu -o ./build/t4

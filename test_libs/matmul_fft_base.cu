@@ -21,16 +21,6 @@ extern "C"
 // custom headers
 #include "./include/tools.h"
 
-/*__global__ void julia_kernel( int n, double *a, double *b, double *c  ){*/
-
-	/*int i = threadIdx.y;*/
-	/*int j = threadIdx.x;*/
-
-	/*int gi = threadIdx.y + blockDim.y*blockIdx.y;*/
-	/*int gj = threadIdx.x + blockDim.x*blockIdx.x;*/
-
-/*}*/
-
 
 int main( int argc, char**  argv  ){
 
@@ -43,11 +33,6 @@ int main( int argc, char**  argv  ){
 
 	std::cout << "cuFFT Test - Discrete Cosine Transform" << std::endl;
 	
-	// CUDA Timmers
-	/*cudaEvent_t start, stop;*/
-	/*cudaEventCreate(&start);*/
-	/*cudaEventCreate(&stop);*/
-
 	// OMP
 	int ncpu = 1;
 	omp_set_num_threads(ncpu);

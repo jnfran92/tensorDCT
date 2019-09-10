@@ -92,6 +92,14 @@ int main( int argc, char**  argv  ){
 	print_array(x_n, 16*16);
 
 	// CUDA
+	// Data
+	double *m_line_d;
+	double *n_line_d;
+	double *x_n_d;
+
+	// CUDA Malloc
+	cudaMalloc(  );
+
 	// CUDA Handle
 	cublasHandle_t cublasHandle;
   	cudaEvent_t startcublas;
@@ -106,27 +114,23 @@ int main( int argc, char**  argv  ){
 
 	cudaEventRecord(startcublas);
 	
-	cublasGemmEx(
-			cublasHandle, 
-			CUBLAS_OP_N, 
-			CUBLAS_OP_N,
-			MATRIX_M, 
-			MATRIX_N, 
-			MATRIX_K,
-		       	&alpha,
-			a_fp16, 
-			CUDA_R_16F, 
-			MATRIX_M,						                
-			b_fp16, 
-			CUDA_R_16F, 
-			MATRIX_K,
-			&beta, 
-			c_cublas, 
-			CUDA_R_32F, 
-			MATRIX_M,
-			CUDA_R_32F, 
-			CUBLAS_GEMM_DFALT_TENSOR_OP);
-
+	cublasDgemm(
+			cublasHandle,		// hanlde
+			CUBLAS_OP_N		// trans a 
+			CUBLAS_OP_N,		// trans b
+                    	16,			// m 
+			16,			// n 
+			1, 			// k
+		        1.0, 			// alpha
+	  		m_line_d,		// a matrix 
+			1,			// lda
+			n_line_d, 		// b matrix
+			16,			// ldb
+ 			0.0,			// beta
+		        x_n_device, 		// c matrix
+			16			// ldc
+			);
+	
 	cudaEventRecord(stopcublas);
 	
 	float cublasTime;
