@@ -60,49 +60,68 @@ int main( int argc, char**  argv  ){
 	double *n_line = new double[size_n];
 
 	// Fill and Print	
-	fill_vector_cos(2, size_m, m_line);
+	fill_vector_cos(3, size_m, m_line);
 	fill_vector_cos(2, size_n, n_line);
 	
 	print_array(m_line, size_m);
 	print_array(n_line, size_n);
 
-	/*
-	   FFTW
-	*/
-	// FFTW one dimension using m_line
+	// Building a 2d matrix based on m_line using CBLAS 
+	cblas_dgemm(CblasRowMajor, 		// Layout
+			CblasNoTrans, 		// trans a
+			CblasNoTrans,		// trans b
+			16,			// m
+			16,			// n
+			1,			// k
+			1.0,			// alpha
+			m_line,			// a matrix
+			1,			// lda
+			n_line,			// b matrix
+			16,			// ldb
+			0.0,			// beta
+			x_n,			// c matrix
+			16			// ldc
+			   );	
+	
+	print_array(x_n , 16*16);
+
+	// FFTW two dimensions using m_line.dot(n_line) = x_n
 	fftw_complex *data_in, *data_out;
 	fftw_plan p;
 	// allocating data
-	data_in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * size_m);	
-	data_out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * size_m);
+	data_in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * size_m * size_n);	
+	data_out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * size_m * size_n);
 	
 	// fill data
-	std::cout<< "Data in FFTW" << std::endl;
+	std::cout<< "Data in FFTW -------------" << std::endl;
 	for (int i=0; i<size_m; i++){
-		data_in[i][0] = m_line[i]; 	// real data
-		data_in[i][1] = 0.0; 		// imaginary data
-		std::cout << data_in[i][0] << " - "<< data_in[i][1] << std::endl;
-	}
-	
-	// executing fft	
-	p = fftw_plan_dft_1d(
+		for (int j=0; j<size_n; j++){
+			data_in[i*size_n + j][0] = x_n[i*size_n + j]; 	// real data
+			data_in[i*size_n + j][1] = 0.0; 		// imaginary data
+			std::cout << data_in[i*size_n + j][0] << " - "<< data_in[i*size_n + j][1] << std::endl;
+		}
+	}	
+
+	p = fftw_plan_dft_2d(
 			size_m, 
+			size_n, 
 			data_in, 
-			data_out, 
+			data_out,
 			FFTW_FORWARD, 
 			FFTW_ESTIMATE);
+
+	// executing fft	
 	fftw_execute(p);
-	/*fdata = fftwf_data(data, ndata, nfft);*/
 
-
-	std::cout << "results " << std::endl;
+	std::cout << "results----- " << std::endl;
 	// fill data
+	
 	for (int i=0; i<size_m; i++){
-		/*data_in[0][i] = m_line[i]; 	// real data*/
-		/*data_in[1][i] = 0.0; 		// imaginary data*/
-		std::cout << data_out[i][0] << " - "<< data_out[i][1] << " - "<< fftw_abs(data_out[i][0], data_out[i][1]) << std::endl;
+		for (int j=0; j<size_n; j++){
+			std::cout << data_out[i*size_n + j][0] << " - "<< data_out[i*size_n + j][1] 
+				  << " - "<< fftw_abs(data_out[i*size_n + j][0], data_out[i*size_n + j][1]) << std::endl;
+		}
 	}
-
 
 	// free data
 	fftw_destroy_plan(p);
