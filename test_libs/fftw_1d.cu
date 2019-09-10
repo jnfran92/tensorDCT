@@ -13,6 +13,8 @@ extern "C"
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+
+#include <complex> 
 //#include "../utils/utils.h"
 //#include "../utils/matutils.h"
 
@@ -20,6 +22,10 @@ extern "C"
 
 // custom headers
 #include "./include/tools.h"
+
+double fftw_abs(double real, double img){
+	return std::abs(std::complex<double>(real, img));
+}
 
 
 int main( int argc, char**  argv  ){
@@ -90,7 +96,7 @@ int main( int argc, char**  argv  ){
 	for (int i=0; i<size_m; i++){
 		/*data_in[0][i] = m_line[i]; 	// real data*/
 		/*data_in[1][i] = 0.0; 		// imaginary data*/
-		std::cout << data_out[i][0] << " - "<< data_out[i][1] << std::endl;
+		std::cout << data_out[i][0] << " - "<< data_out[i][1] << " - "<< fftw_abs(data_out[i][0], data_out[i][1]) << std::endl;
 	}
 
 
