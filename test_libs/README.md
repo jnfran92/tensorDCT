@@ -50,8 +50,7 @@ Therefore, include library in the Makefile like:
 
 	g++ ... -L/usr/lib -llapack -lblas
 
-If there is a problem with libraries(ex: libgfortran..), search it using `locate` and add to Makefile using `"-L"`.
-
+If there is a problem with shared libraries(ex: libgfortran..), see [this](https://www.cprogramming.com/tutorial/shared-libraries-linux-gcc.html).
 
 ## Reference
 

@@ -98,9 +98,9 @@ int main( int argc, char**  argv  ){
 	double *x_n_d;
 
 	// CUDA Malloc
-	cudaMalloc((void **)&m_line_d, sizeof(double)*size_m);
-	cudaMalloc((void **)&n_line_d, sizeof(double)*size_n);
-	cudaMalloc((void **)&x_n_d, sizeof(double)*size_m*size_n);
+	cudaMalloc((void **)&m_line_d, 	sizeof(double)*size_m);
+	cudaMalloc((void **)&n_line_d, 	sizeof(double)*size_n);
+	cudaMalloc((void **)&x_n_d, 	sizeof(double)*size_m*size_n);
 
 	// CUDA Handle
 	cublasHandle_t cublasHandle;
@@ -116,22 +116,24 @@ int main( int argc, char**  argv  ){
 
 	cudaEventRecord(startcublas);
 
-	double alpha = 1.0;
-	double beta = 0.0;
+	const double alpha = 1.0;
+	const double beta = 0.0;
+	const double *alpha_ptr = &alpha;
+	const double *beta_ptr = &beta;
 
 	cublasDgemm(
 			cublasHandle,		// hanlde
-			CUBLAS_OP_N,		// trans a 
-			CUBLAS_OP_N,		// trans b
+			CUBLAS_OP_T,		// trans a 
+			CUBLAS_OP_T,		// trans b
                     	16,			// m 
 			16,			// n 
 			1, 			// k
-		        &alpha, 		// alpha
+		        alpha_ptr, 		// alpha
 	  		m_line_d,		// a matrix 
 			1,			// lda
 			n_line_d, 		// b matrix
 			16,			// ldb
- 			&beta,			// beta
+ 			beta_ptr,		// beta
 		        x_n_d, 			// c matrix
 			16			// ldc
 			);
