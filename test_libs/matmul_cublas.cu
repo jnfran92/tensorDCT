@@ -98,7 +98,9 @@ int main( int argc, char**  argv  ){
 	double *x_n_d;
 
 	// CUDA Malloc
-	cudaMalloc(  );
+	cudaMalloc((void **)&m_line_d, sizeof(double)*size_m);
+	cudaMalloc((void **)&n_line_d, sizeof(double)*size_n);
+	cudaMalloc((void **)&x_n_d, sizeof(double)*size_m*size_n);
 
 	// CUDA Handle
 	cublasHandle_t cublasHandle;
@@ -108,26 +110,29 @@ int main( int argc, char**  argv  ){
 	cudaEventCreate(&startcublas);
 	cudaEventCreate(&stopcublas);
 	
-	cublasCreate(&cublasHandle)
+	cublasCreate(&cublasHandle);
 	// Tensor cores enabled
-	cublasSetMathMode(cublasHandle, CUBLAS_TENSOR_OP_MATH);	
+	/*cublasSetMathMode(cublasHandle, CUBLAS_TENSOR_OP_MATH);	*/
 
 	cudaEventRecord(startcublas);
-	
+
+	double alpha = 1.0;
+	double beta = 0.0;
+
 	cublasDgemm(
 			cublasHandle,		// hanlde
-			CUBLAS_OP_N		// trans a 
+			CUBLAS_OP_N,		// trans a 
 			CUBLAS_OP_N,		// trans b
                     	16,			// m 
 			16,			// n 
 			1, 			// k
-		        1.0, 			// alpha
+		        &alpha, 		// alpha
 	  		m_line_d,		// a matrix 
 			1,			// lda
 			n_line_d, 		// b matrix
 			16,			// ldb
- 			0.0,			// beta
-		        x_n_device, 		// c matrix
+ 			&beta,			// beta
+		        x_n_d, 			// c matrix
 			16			// ldc
 			);
 	
@@ -148,7 +153,9 @@ int main( int argc, char**  argv  ){
 	cudaEventDestroy(startcublas);
 	cudaEventDestroy(stopcublas);
 
-	/*cudaFree();*/
+	cudaFree(m_line_d);
+	cudaFree(n_line_d);
+	cudaFree(x_n_d);
 
 
 	return 0;

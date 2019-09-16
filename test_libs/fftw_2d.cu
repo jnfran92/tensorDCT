@@ -15,8 +15,6 @@ extern "C"
 #include <stdio.h>
 
 #include <complex> 
-//#include "../utils/utils.h"
-//#include "../utils/matutils.h"
 
 #include "omp.h"
 
