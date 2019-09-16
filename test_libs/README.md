@@ -11,6 +11,7 @@ Test status:
 
 - test_3 `fftw_2d`: 2D fftw compared with python :white_check_mark:
 
+- test_4 `matmul_cublas.cu`: 2D matrix multiplication 
 
 ## Notes
 
@@ -41,6 +42,15 @@ with:
 	 && !(defined(__ICC) || defined(__INTEL_COMPILER) || defined(__CUDACC__)) \
 	 && (defined(__i386__) || defined(__x86_64__) || defined(__ia64__))
 
+For Ubunut to install BLAS and LAPACK use:
+
+	sudo apt-get install liblapack-dev -y ; sudo apt-get install liblapack3 -y ; sudo apt-get install libopenblas-base -y ; sudo apt-get install libopenblas-dev -y ;
+
+Therefore, include library in the Makefile like:
+
+	g++ ... -L/usr/lib -llapack -lblas
+
+If there is a problem with libraries(ex: libgfortran..), search it using `locate` and add to Makefile using `"-L"`.
 
 
 ## Reference
