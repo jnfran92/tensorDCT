@@ -6,7 +6,7 @@ OPEN_MP_FALG = -Xcompiler -fopenmp
 # If are using UACH server use this
 LIBS = -L/usr/lib/gcc/x86_64-pc-linux-gnu/5.5.0/ -llapack -lblas -lfftw3 -lgfortran -lm 
 
-# If are using local server uncomment this
+# If are using local server use this
 #LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lgfortran -lm -L/usr/lib/gcc/x86_64-pc-linux-gnu/5.5.0/
 CUDA_LIBS = -lcublas 
 
