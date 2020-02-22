@@ -64,7 +64,7 @@ int main( int argc, char**  argv  ){
 	print_array(m_line, size_m);
 	print_array(n_line, size_n);
 
-	// Building a 2d matrix based on m_line using CBLAS 
+	// Building a 2d matrix based on m_line using CBLAS
 	cblas_dgemm(CblasRowMajor, 		// Layout
 			CblasNoTrans, 		// trans a
 			CblasNoTrans,		// trans b

@@ -106,6 +106,7 @@ int main( int argc, char**  argv  ){
 	cublasHandle_t cublasHandle;
   	cudaEvent_t startcublas;
      	cudaEvent_t stopcublas;
+
 	// cublas event create
 	cudaEventCreate(&startcublas);
 	cudaEventCreate(&stopcublas);
