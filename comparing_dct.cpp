@@ -6,7 +6,7 @@
 #include <cstdio>
 
 int main(int argv, char** argc){
-    printf("Comparing DCT tensorcores , cublas and fftw\n");
+    printf("Comparing DCT tensorcores , cublas and cufft\n");
 
 
 
