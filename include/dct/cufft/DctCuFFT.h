@@ -24,6 +24,32 @@ private:
 
     cublasHandle_t cublasHandle;
 
+
+
+public:
+    /**
+     * Cosine Transform processor constructor for 2D, x and y dim are needed.
+     * @param dim_y
+     * @param dim_x
+     */
+    DctCuFFT(int dim_y, int dim_x);
+
+    DctCuFFT();
+
+    /**
+     * Discrete Cosine Transform using CBLAS and matmul
+     * @param x_n_ptr input matrix pointer - time/space domain
+     * @param x_k_ptr output matrix pointer applied dct on it.
+     */
+    void dct(thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k);
+
+    /**
+     * Discrete Cosine Inverse Transform using CBLAS and matmul
+     * @param x_k_ptr input matrix pointer freq domain
+     * @param x_n_ptr output matrix pointer applied idct on it.
+     */
+    void idct(thrust::device_vector<double> &x_k, thrust::device_vector<double> &x_n);
+
 };
 
 
