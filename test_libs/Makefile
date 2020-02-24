@@ -4,10 +4,10 @@ OPT_FLAG = -O3
 OPEN_MP_FALG = -Xcompiler -fopenmp
 
 # If are using UACH server use this
-#LIBS = -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.1/ -llapack -lblas -lfftw3 -lgfortran -lm 
+#LIBS = -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.1/ -llapack -lblas -lfftw3 -lgfortran -lm
 
 # If are using local server use this
-LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lm 
+LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lm
 CUDA_LIBS = -lcublas 
 
 
