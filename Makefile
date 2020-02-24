@@ -11,7 +11,7 @@ DCT_PROC= ./include/dct/cublas/DctCuBlas.cpp
 
 BUILD_DIR = ./build
 
-O_OBJS = proto.o dct_proc.o
+O_OBJS = main.o dct_proc.o
 
 O_OBJS2 = $(addprefix $(BUILD_DIR)/, $(O_OBJS))
 
