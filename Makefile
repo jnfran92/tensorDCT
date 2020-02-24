@@ -13,10 +13,10 @@ BUILD_DIR = ./build
 
 O_OBJS = proto.o dct_proc.o
 
-O_OBJS = $(addprefix $(BUILD_DIR)/, $(O_OBJS))
+O_OBJS2 = $(addprefix $(BUILD_DIR)/, $(O_OBJS))
 
 all: init clean objs
-	nvcc $(C11) $(LIBS) $(CUDA_LIBS) $(O_OBJS) -o app
+	nvcc $(C11) $(LIBS) $(CUDA_LIBS) $(O_OBJS2) -o app
 
 init:
 	if [ -d $(BUILD_DIR) ]; then echo "$(BUILD_DIR) exists!"; else mkdir $(BUILD_DIR); fi
@@ -28,6 +28,7 @@ clean:
 objs:
 	nvcc -x cu $(C11)  -dc -o $(BUILD_DIR)/dct_proc.o $(DCT_PROC)
 	nvcc -x cu $(C11)  -dc -o $(BUILD_DIR)/main.o $(MAIN)
+
 
 
 
