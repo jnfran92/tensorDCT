@@ -3,8 +3,8 @@ CUDA_LIBS = -lcublas
 C11 = -std=c++11
 
 # If are using UACH server use this
-LIBS = -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.1/ -llapack -lblas -lfftw3 -lgfortran -lm
-#LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lm
+#LIBS = -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.1/ -llapack -lblas -lfftw3 -lgfortran -lm
+LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lm
 
 MAIN= comparing_dct.cpp
 DCT_PROC= ./include/dct/cublas/DctCuBlas.cpp
@@ -26,8 +26,8 @@ clean:
 	rm -r -f $(BUILD_DIR)/*
 
 objs:
-	nvcc -x cu $(C11)  -dc -o $(BUILD_DIR)/dct_proc.o $(DCT_PROC)
-	nvcc -x cu $(C11)  -dc -o $(BUILD_DIR)/main.o $(MAIN)
+	nvcc -x cu $(C11)  $(LIBS)  -dc -o $(BUILD_DIR)/dct_proc.o $(DCT_PROC)
+	nvcc -x cu $(C11)  $(LIBS)  -dc -o $(BUILD_DIR)/main.o $(MAIN)
 
 
 
