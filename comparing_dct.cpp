@@ -37,22 +37,14 @@ int main(int argv, char** argc){
     print_array(n_line, size_n);
 
 
-    // Building a 2d matrix based on m_line using CBLAS
-    cblas_dgemm(CblasRowMajor, 		// Layout
-                CblasNoTrans, 		// trans a
-                CblasNoTrans,		// trans b
-                16,			// m
-                16,			// n
-                1,			// k
-                1.0,			// alpha
-                m_line,			// a matrix
-                1,			// lda
-                n_line,			// b matrix
-                16,			// ldb
-                0.0,			// beta
-                x_n_host,			// c matrix
-                16			// ldc
-    );
+    for (int i=0; i<size_m; i++){
+        for (int j=0; j<size_n; j++){
+            for (int k=0; k<1; k++){
+                x_n_host[i* size_n + j] += m_line[i*size_m + k] * n_line[k*];
+            }
+        }
+    }
+
 
     print_array(x_n_host , 16*16);
 
