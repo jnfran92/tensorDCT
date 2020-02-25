@@ -72,7 +72,7 @@ int main(int argv, char** argc){
     DctCuBlas dctCuBlas(dim_y, dim_x);
     dctCuBlas.dct(x_n, x_k);
 
-    print_dvector(x_k);
+    print_dvector(x_k, "x_k");
 
 
     delete x_n_host;
