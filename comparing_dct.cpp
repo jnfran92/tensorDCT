@@ -2,12 +2,14 @@
 // Created by Juan Francisco on 2020-02-22.
 //
 #include <cstdio>
+//
+////CBLAS
+//extern "C"
+//{
+//#include <cblas.h>
+//}
 
-//CBLAS
-extern "C"
-{
-#include <cblas.h>
-}
+//#include "mkl.h"
 
 #include "include/common_gpu_utils.h"
 #include "test_libs/include/tools.h"
@@ -36,11 +38,13 @@ int main(int argv, char** argc){
     print_array(m_line, size_m);
     print_array(n_line, size_n);
 
-
-    for (int i=0; i<size_m; i++){
-        for (int j=0; j<size_n; j++){
-            for (int k=0; k<1; k++){
-                x_n_host[i* size_n + j] += m_line[i*size_m + k] * n_line[k*];
+    int M = size_m;
+    int N = size_n;
+    int K = 1;
+    for (int i=0; i<M; i++){
+        for (int j=0; j<N; j++){
+            for (int k=0; k<K; k++){
+                x_n_host[i*size_n + j] += m_line[i*K + k] * n_line[k*N + j];
             }
         }
     }
