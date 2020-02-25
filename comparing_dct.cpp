@@ -13,7 +13,7 @@
 #include "./include/cuda_helper/cuda_include_helper.h"
 #include "include/common_gpu_utils.h"
 #include "test_libs/include/tools.h"
-
+#include "include/dct/cublas/DctCuBlas.h"
 
 
 int main(int argv, char** argc){
@@ -65,6 +65,14 @@ int main(int argv, char** argc){
 
     print_dvector(x_n, "x_n");
 
+
+    // Init DCT
+    int dim_y = size_m;
+    int dim_x = size_n;
+    DctCuBlas dctCuBlas(dim_y, dim_x);
+    dctCuBlas.dct(x_n, x_k);
+
+    print_dvector(x_k);
 
 
     delete x_n_host;
