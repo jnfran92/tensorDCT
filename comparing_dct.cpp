@@ -10,10 +10,10 @@
 //}
 
 //#include "mkl.h"
-
+#include "./include/cuda_helper/cuda_include_helper.h"
 #include "include/common_gpu_utils.h"
 #include "test_libs/include/tools.h"
-#include "./include/cuda_helper/cuda_include_helper.h"
+
 
 
 int main(int argv, char** argc){
