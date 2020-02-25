@@ -23,7 +23,7 @@ int main(int argv, char** argc){
     std::cout << "PI number: "<< M_PI << std::endl;
 
     int size_m = 16;
-    int size_n = 16;
+    int size_n = 8;
 
 //    thrust::host_vector<>
     auto *x_n_host = new double[size_m * size_n];
