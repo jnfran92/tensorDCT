@@ -37,7 +37,7 @@ void print_array(double* data, int m, int n){
 	for (int i=0; i<m; i++){
 		for (int j=0; j<n; j++){
 //			std::cout << data[i] << " ";
-			printf("%3.4f ", data[i] );
+			printf("%3.4f ", data[i*n + j] );
 		}
 		std::cout <<std::endl;
 	}
