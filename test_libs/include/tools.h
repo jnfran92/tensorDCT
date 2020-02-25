@@ -36,7 +36,7 @@ void print_array(double* data, int m, int n){
 	std::cout << "print array"<< std::endl;
 	for (int i=0; i<m; i++){
 		for (int j=0; j<n; j++){
-			std::cout << data[i];
+			std::cout << data[i] << " ";
 		}
 		std::cout <<std::endl;
 	}
