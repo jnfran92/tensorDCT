@@ -15,7 +15,7 @@ void fill_vector_cos(int k_arg, int n_arg, double* vector){
 	double n = (double)n_arg;
 	for (int i=0; i<n_arg; i++){
 		double val = (double)i;
-		vector[i] = cos(2*M_PI*k*(val / (n-1.0)));		
+		vector[i] = cos(M_PI*k*(val / (n-1.0)));
 	}
 }
 
