@@ -71,6 +71,7 @@ int main(int argv, char** argc){
     int dim_x = size_n;
     DctCuBlas dctCuBlas(dim_y, dim_x);
     dctCuBlas.dct(x_n, x_k);
+    cudaDeviceSynchronize();
 
     print_dvector(x_k, "x_k");
 
