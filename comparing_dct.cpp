@@ -75,7 +75,7 @@ int main(int argv, char** argc){
     print_dvector(x_k, "x_k");
 
 
-    delete[] x_n_host;
+//    delete[] x_n_host;
 
     return 0;
 }
