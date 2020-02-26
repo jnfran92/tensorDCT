@@ -61,6 +61,8 @@ DctCuBlas::DctCuBlas(int dim_y, int dim_x) {
 
     // CuBLAS creation
     cublasCreate(&cublasHandle);
+    cudaDeviceSynchronize();
+
 }
 
 DctCuBlas::DctCuBlas() {
