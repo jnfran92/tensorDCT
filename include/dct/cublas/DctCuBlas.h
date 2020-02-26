@@ -5,7 +5,9 @@
 #ifndef TENSORDCT_DCTCUBLAS_H
 #define TENSORDCT_DCTCUBLAS_H
 
-#include "../../cuda_helper/cuda_include_helper.h"
+//#include "../../cuda_helper/cuda_include_helper.h"
+#include <thrust/device_vector.h>
+#include <cublas_v2.h>
 
 /**
  * 2D DCT using CuBLAS
