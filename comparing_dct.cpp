@@ -59,7 +59,7 @@ int main(int argv, char** argc){
 
 
     // GPU copies
-    int seq_size = size_m * size_n;
+    int seq_size = size_m * size_n*10;
     thrust::device_vector<double> x_n(seq_size, 1.0);
     double *x_n_ptr = thrust::raw_pointer_cast(&x_n[0]);
 
