@@ -26,8 +26,8 @@ clean:
 	rm -r -f $(BUILD_DIR)/*
 
 objs:
-	nvcc -x cu $(C11)  $(LIBS)  -dc -o $(BUILD_DIR)/dct_proc.o $(DCT_PROC)
-	nvcc -x cu $(C11)  $(LIBS)  -dc -o $(BUILD_DIR)/main.o $(MAIN)
+	nvcc -x cu $(C11)  -dc -o $(BUILD_DIR)/dct_proc.o $(DCT_PROC)
+	nvcc -x cu $(C11)  -dc -o $(BUILD_DIR)/main.o $(MAIN)
 
 
 
