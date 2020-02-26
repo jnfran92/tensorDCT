@@ -6,8 +6,8 @@ C11 = -std=c++11
 #LIBS = -L/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.1/ -llapack -lblas -lfftw3 -lgfortran -lm
 LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lm
 
-MAIN= comparing_dct.cu
-DCT_PROC= ./include/dct/cublas/DctCuBlas.cpp
+MAIN= comparing_dct.cpp
+DCT_PROC= ./include/dct/cublas/DctCuBlas.cu
 
 BUILD_DIR = ./build
 
