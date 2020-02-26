@@ -28,7 +28,7 @@ int main(int argv, char** argc){
     std::cout << "PI number: "<< M_PI << std::endl;
 
     int size_m = 16;
-    int size_n = 4;
+    int size_n = 8;
 
     int dim_y = size_m;
     int dim_x = size_n;
