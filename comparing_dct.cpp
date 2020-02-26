@@ -63,7 +63,7 @@ int main(int argv, char** argc){
 
 //    cudaMemcpy(x_n_ptr, x_n_host, sizeof(double)*size_m*size_n, cudaMemcpyHostToDevice);
 
-    print_dvector(x_n, "x_n");
+//    print_dvector(x_n, "x_n");
 
 
     // Init DCT
