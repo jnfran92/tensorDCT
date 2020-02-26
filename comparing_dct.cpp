@@ -28,8 +28,7 @@ int main(int argv, char** argc){
 
     int dim_y = size_m;
     int dim_x = size_n;
-    DctCuBlas dctCuBlas;
-    dctCuBlas = DctCuBlas(dim_y, dim_x);
+
 
 //    thrust::host_vector<>
     auto *x_n_host = new double[size_m * size_n];
@@ -72,6 +71,8 @@ int main(int argv, char** argc){
 //    print_dvector(x_n, "x_n");
 
 
+    // DCT
+    DctCuBlas  dctCuBlas(dim_y, dim_x);
     // Init DCT
     dctCuBlas.dct(x_n, x_k);
 
@@ -79,6 +80,8 @@ int main(int argv, char** argc){
 
 
     delete[] x_n_host;
+    delete[] m_line;
+    delete[] n_line;
 
     return 0;
 }
