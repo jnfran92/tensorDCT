@@ -28,7 +28,7 @@ int main(int argv, char** argc){
 
     int dim_y = size_m;
     int dim_x = size_n;
-    DctCuBlas dctCuBlas(dim_y, dim_x);
+    DctCuBlas dctCuBlas(dim_x, dim_y);
 
 //    thrust::host_vector<>
     auto *x_n_host = new double[size_m * size_n];
