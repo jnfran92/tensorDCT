@@ -29,33 +29,33 @@ int main(int argv, char** argc){
     int dim_y = size_m;
     int dim_x = size_n;
 
-
-//    thrust::host_vector<>
-    auto *x_n_host = new double[size_m * size_n];
-
-    auto *m_line = new double[size_m];
-    auto *n_line = new double[size_n];
-
-    // Fill and Print
-    fill_vector_cos(3, size_m, m_line);
-    fill_vector_cos(2, size_n, n_line);
-
-    print_array(m_line, size_m);
-    print_array(n_line, size_n);
-
-    int M = size_m;
-    int N = size_n;
-    int K = 1;
-    for (int i=0; i<M; i++){
-        for (int j=0; j<N; j++){
-            for (int k=0; k<K; k++){
-                x_n_host[i*size_n + j] += m_line[i*K + k] * n_line[k*N + j];
-            }
-        }
-    }
-
-
-    print_array(x_n_host , M, N);
+//
+////    thrust::host_vector<>
+//    auto *x_n_host = new double[size_m * size_n];
+//
+//    auto *m_line = new double[size_m];
+//    auto *n_line = new double[size_n];
+//
+//    // Fill and Print
+//    fill_vector_cos(3, size_m, m_line);
+//    fill_vector_cos(2, size_n, n_line);
+//
+//    print_array(m_line, size_m);
+//    print_array(n_line, size_n);
+//
+//    int M = size_m;
+//    int N = size_n;
+//    int K = 1;
+//    for (int i=0; i<M; i++){
+//        for (int j=0; j<N; j++){
+//            for (int k=0; k<K; k++){
+//                x_n_host[i*size_n + j] += m_line[i*K + k] * n_line[k*N + j];
+//            }
+//        }
+//    }
+//
+//
+//    print_array(x_n_host , M, N);
 
 
     // GPU copies
@@ -79,10 +79,10 @@ int main(int argv, char** argc){
 
     print_dvector(x_k, "x_k");
 
-
-    delete[] x_n_host;
-    delete[] m_line;
-    delete[] n_line;
+//
+//    delete[] x_n_host;
+//    delete[] m_line;
+//    delete[] n_line;
 
     return 0;
 }
