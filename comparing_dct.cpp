@@ -23,8 +23,8 @@ int main(int argv, char** argc){
     // Creating matrices - using two vectors
     std::cout << "PI number: "<< M_PI << std::endl;
 
-    int size_m = 16;
-    int size_n = 16;
+    int size_m = 4;
+    int size_n = 2;
 
     int dim_y = size_m;
     int dim_x = size_n;
