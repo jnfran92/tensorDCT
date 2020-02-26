@@ -5,12 +5,6 @@
 #include "DctCuBlas.h"
 
 #include <cassert>
-//#include <math.h>
-//#include <cublas_v2.h>
-//
-//#include <cuda_runtime.h>
-//#include <cuda.h>
-//#include <device_launch_parameters.h>
 
 /**
  *
