@@ -29,8 +29,8 @@ __global__ void fill_cosine_matrix_kernel(double* matrix, int N){
 
 DctCuBlas::DctCuBlas(int dim_y, int dim_x) {
 
-    int y_size = dim_y;    //m - i
-    int x_size = dim_x;     //n - j
+    int y_size = dim_y;    //m -> i
+    int x_size = dim_x;     //n -> j
 
     c_x = thrust::device_vector<double>(x_size*x_size, 1.0);
     c_x_ptr = thrust::raw_pointer_cast(&c_x[0]);
