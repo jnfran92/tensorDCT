@@ -61,7 +61,7 @@ int main(int argv, char** argc){
     thrust::device_vector<double> x_k(seq_size, 0.0);
     double *x_k_ptr = thrust::raw_pointer_cast(&x_k[0]);
 
-    cudaMemcpy(x_n_ptr, x_n_host, sizeof(double)*size_m*size_n, cudaMemcpyHostToDevice);
+//    cudaMemcpy(x_n_ptr, x_n_host, sizeof(double)*size_m*size_n, cudaMemcpyHostToDevice);
 
     print_dvector(x_n, "x_n");
 
