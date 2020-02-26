@@ -7,7 +7,7 @@ C11 = -std=c++11
 LIBS = -L/usr/lib -llapack -lblas -lfftw3 -lm
 
 MAIN= comparing_dct.cpp
-DCT_PROC= ./include/dct/cublas/DctCuBlas.cu
+DCT_PROC= ./include/dct/cublas/DctCuBlas.cpp
 
 BUILD_DIR = ./build
 
