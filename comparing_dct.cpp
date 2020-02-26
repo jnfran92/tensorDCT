@@ -24,11 +24,12 @@ int main(int argv, char** argc){
     std::cout << "PI number: "<< M_PI << std::endl;
 
     int size_m = 16;
-    int size_n = 8;
+    int size_n = 16;
 
     int dim_y = size_m;
     int dim_x = size_n;
-    DctCuBlas dctCuBlas(dim_x, dim_y);
+    DctCuBlas dctCuBlas;
+    dctCuBlas = DctCuBlas(dim_y, dim_x);
 
 //    thrust::host_vector<>
     auto *x_n_host = new double[size_m * size_n];
