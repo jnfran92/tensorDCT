@@ -77,6 +77,7 @@ void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<do
     const double *alpha_ptr = &alpha;
     const double *beta_ptr = &beta;
 
+    printf("cublasDgemm\n");
     cublasDgemm(
             cublasHandle,	// handle
             CUBLAS_OP_N,	// no trans a
@@ -94,6 +95,7 @@ void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<do
             dim_x			// ldc
     );
 
+    printf("cublasDgemm\n");
     cublasDgemm(
             cublasHandle,	// handle
             CUBLAS_OP_N,	// no trans a
