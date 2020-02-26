@@ -19,11 +19,16 @@
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
 
+
     // Creating matrices - using two vectors
     std::cout << "PI number: "<< M_PI << std::endl;
 
     int size_m = 16;
     int size_n = 8;
+
+    int dim_y = size_m;
+    int dim_x = size_n;
+    DctCuBlas dctCuBlas(dim_y, dim_x);
 
 //    thrust::host_vector<>
     auto *x_n_host = new double[size_m * size_n];
@@ -67,9 +72,6 @@ int main(int argv, char** argc){
 
 
     // Init DCT
-    int dim_y = size_m;
-    int dim_x = size_n;
-    DctCuBlas dctCuBlas(dim_y, dim_x);
     dctCuBlas.dct(x_n, x_k);
     cudaDeviceSynchronize();
 
