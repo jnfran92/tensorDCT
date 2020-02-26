@@ -60,16 +60,17 @@ int main(int argv, char** argc){
 
     // GPU copies
     int seq_size = size_m * size_n;
-    thrust::device_vector<double> x_n(seq_size, 0.0);
+    thrust::device_vector<double> x_n(seq_size, 1.0);
     double *x_n_ptr = thrust::raw_pointer_cast(&x_n[0]);
 
-    thrust::device_vector<double> x_k(seq_size, 0.0);
+    thrust::device_vector<double> x_k(seq_size, 2.0);
     double *x_k_ptr = thrust::raw_pointer_cast(&x_k[0]);
 
+    print_dvector(x_n, "x_n");
+    print_dvector(x_k, "x_k");
+
 //    cudaMemcpy(x_n_ptr, x_n_host, sizeof(double)*size_m*size_n, cudaMemcpyHostToDevice);
-
 //    print_dvector(x_n, "x_n");
-
 
     // DCT
     DctCuBlas  dctCuBlas(dim_y, dim_x);

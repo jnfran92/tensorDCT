@@ -16,7 +16,7 @@ add_library(whatever STATIC
         matmul_cublas.cu
         matmul_fft_base.cu
         ../include/common_gpu_utils.h
-        ../include/cuda_helper/cuda_include_helper.h ../include/dct/cublas/DctCuBlas.cu ../include/dct/cublas/DctCuBlas.h ../include/dct/tensorcores/DctTC.cpp ../include/dct/tensorcores/DctTC.h ../comparing_dct.cpp ../include/dct/cufft/DctCuFFT.cpp ../include/dct/cufft/DctCuFFT.h)
+        ../include/cuda_helper/cuda_include_helper.h ../include/dct/cublas/DctCuBlas.cpp ../include/dct/cublas/DctCuBlas.h ../include/dct/tensorcores/DctTC.cpp ../include/dct/tensorcores/DctTC.h ../comparing_dct.cpp ../include/dct/cufft/DctCuFFT.cpp ../include/dct/cufft/DctCuFFT.h)
 
 
 add_custom_target(whatever2 COMMAND make test_1)
