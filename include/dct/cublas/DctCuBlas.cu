@@ -68,7 +68,7 @@ DctCuBlas::DctCuBlas() {
 }
 
 void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k) {
-
+    printf("dct\n");
     double *x_n_ptr = thrust::raw_pointer_cast(&x_n[0]);
     double *x_k_ptr = thrust::raw_pointer_cast(&x_k[0]);
 
