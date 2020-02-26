@@ -4,6 +4,8 @@
 
 #include "DctCuBlas.h"
 
+#include <assert.h>
+
 /**
  *
  * iDCT Normalization functor: x_n_i*sigma,  sigma=(4/(x_size*y_size))
@@ -60,7 +62,8 @@ DctCuBlas::DctCuBlas(int dim_y, int dim_x) {
     cudaDeviceSynchronize();
 
     // CuBLAS creation
-    cublasCreate(&cublasHandle);
+    cublasStatus_t cublasStatus = cublasCreate(&cublasHandle);
+    assert(cublasStatus == CUBLAS_STATUS_SUCCESS);
 }
 
 DctCuBlas::DctCuBlas() {
