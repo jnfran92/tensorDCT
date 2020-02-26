@@ -35,45 +35,41 @@ __global__ void fill_cosine_matrix_kernel(double* matrix, int N){
     matrix[k * N + n] = temp_val;
 }
 
-DctCuBlas::DctCuBlas(int dim_y, int dim_x) {
+DctCuBlas::DctCuBlas(int dim_y, int dim_x): dim_y(dim_y), dim_x(dim_x)  {
     printf("DctCuBlas\n");
-    int y_size = dim_y;    //m -> i
-    int x_size = dim_x;     //n -> j
+//    int y_size = dim_y;    //m -> i
+//    int x_size = dim_x;     //n -> j
 
-    c_x = thrust::device_vector<double>(x_size*x_size, 1.0);
+    c_x = thrust::device_vector<double>(dim_x*dim_x, 1.0);
     c_x_ptr = thrust::raw_pointer_cast(&c_x[0]);
 
 
-    c_y = thrust::device_vector<double>(y_size*y_size, 1.0);
+    c_y = thrust::device_vector<double>(dim_y*dim_y, 1.0);
     c_y_ptr = thrust::raw_pointer_cast(&c_y[0]);
 
 
     // auxiliary vector for both DCT and iDCT
-    tmp_k = thrust::device_vector<double>(x_size*y_size, 0.0);
+    tmp_k = thrust::device_vector<double>(dim_x*dim_y, 0.0);
     tmp_k_ptr = thrust::raw_pointer_cast(&tmp_k[0]);
 
 
     dim3 block_x(1, 1, 1); // fixed size
-    dim3 grid_x(x_size, x_size, 1);
+    dim3 grid_x(dim_x, dim_x, 1);
 
-    fill_cosine_matrix_kernel<<<grid_x, block_x>>>(c_x_ptr, x_size);
+    fill_cosine_matrix_kernel<<<grid_x, block_x>>>(c_x_ptr, dim_x);
     cudaDeviceSynchronize();
 
 
     dim3 block_y(1, 1, 1); // fixed size
-    dim3 grid_y(y_size,y_size, 1);
+    dim3 grid_y(dim_y,dim_y, 1);
 
 
-    fill_cosine_matrix_kernel<<<grid_y, block_y>>>(c_y_ptr, y_size);
+    fill_cosine_matrix_kernel<<<grid_y, block_y>>>(c_y_ptr, dim_y);
     cudaDeviceSynchronize();
 
     // CuBLAS creation
     cublasStatus_t cublasStatus = cublasCreate(&cublasHandle);
     assert(cublasStatus == CUBLAS_STATUS_SUCCESS);
-}
-
-DctCuBlas::DctCuBlas() {
-
 }
 
 void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k) {
@@ -132,4 +128,7 @@ void DctCuBlas::idct(thrust::device_vector<double> &x_k, thrust::device_vector<d
             x_n.begin(),
             idct_norm_ftr(4.0/(double(dim_x)*double(dim_y)))
     );
+}
+
+DctCuBlas::DctCuBlas() {
 }
