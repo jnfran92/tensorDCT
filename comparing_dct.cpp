@@ -11,14 +11,14 @@
 
 //#include "mkl.h"
 //#include "./include/cuda_helper/cuda_include_helper.h"
-#include "include/common_gpu_utils.h"
+
 #include "test_libs/include/tools.h"
 #include "include/dct/cublas/DctCuBlas.h"
 
 #include <thrust/device_vector.h>
 #include <cublas_v2.h>
 
-
+#include "include/common_gpu_utils.h"
 
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
