@@ -28,7 +28,7 @@ __global__ void fill_cosine_matrix_kernel(double* matrix, int N){
 }
 
 DctCuBlas::DctCuBlas(int dim_y, int dim_x) {
-
+    printf("DctCuBlas\n");
     int y_size = dim_y;    //m -> i
     int x_size = dim_x;     //n -> j
 

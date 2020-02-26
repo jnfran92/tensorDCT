@@ -74,12 +74,11 @@ int main(int argv, char** argc){
 
     // Init DCT
     dctCuBlas.dct(x_n, x_k);
-    cudaDeviceSynchronize();
 
     print_dvector(x_k, "x_k");
 
 
-//    delete[] x_n_host;
+    delete[] x_n_host;
 
     return 0;
 }
