@@ -43,7 +43,7 @@ void cublas_dct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thru
 
 
 void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k){
-    std::cout<< "cublas_dct" << std::endl;
+    std::cout<< "cublas_idct" << std::endl;
     // DCT
     cudaEvent_t startcublas;
     cudaEvent_t stopcublas;
@@ -68,16 +68,13 @@ void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thr
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
 
-
-    // Creating matrices - using two vectors
-    std::cout << "PI number: "<< M_PI << std::endl;
-
-    int size_m = 16;
-    int size_n = 8;
+    int size_m = 1024;
+    int size_n = 2048;
 
     int dim_y = size_m;
     int dim_x = size_n;
 
+    printf("dim_y %d   dim_x %d\n",dim_y, dim_x);
 
 //    thrust::host_vector<>
     auto *x_n_host = new double[size_m * size_n];
