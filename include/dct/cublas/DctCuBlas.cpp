@@ -30,10 +30,7 @@ __global__ void fill_cosine_matrix_kernel(double* matrix, int N){
 }
 
 DctCuBlas::DctCuBlas(int dim_y, int dim_x): dim_y(dim_y), dim_x(dim_x)  {
-    printf("DctCuBlas\n");
-//    int y_size = dim_y;    //m -> i
-//    int x_size = dim_x;     //n -> j
-
+//    printf("DctCuBlas\n");
     c_x = thrust::device_vector<double>(dim_x*dim_x, 1.0);
     c_x_ptr = thrust::raw_pointer_cast(&c_x[0]);
 
@@ -67,7 +64,7 @@ DctCuBlas::DctCuBlas(int dim_y, int dim_x): dim_y(dim_y), dim_x(dim_x)  {
 }
 
 void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k) {
-    printf("dct\n");
+//    printf("dct\n");
     double *x_n_ptr = thrust::raw_pointer_cast(&x_n[0]);
     double *x_k_ptr = thrust::raw_pointer_cast(&x_k[0]);
 
@@ -76,7 +73,7 @@ void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<do
     const double *alpha_ptr = &alpha;
     const double *beta_ptr = &beta;
 
-    printf("cublasDgemm\n");
+//    printf("cublasDgemm\n");
     cublasDgemm(
             cublasHandle,	// handle
             CUBLAS_OP_N,	// no trans a
@@ -94,7 +91,7 @@ void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<do
             dim_x			// ldc
     );
 
-    printf("cublasDgemm\n");
+//    printf("cublasDgemm\n");
     cublasDgemm(
             cublasHandle,	// handle
             CUBLAS_OP_N,	// no trans a

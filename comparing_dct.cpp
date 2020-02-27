@@ -19,6 +19,51 @@
 #include <cublas_v2.h>
 
 
+void cublas_dct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k){
+    std::cout<< "cublas_dct" << std::endl;
+    // DCT
+    cudaEvent_t startcublas;
+    cudaEvent_t stopcublas;
+    DctCuBlas  dctCuBlas(dim_y, dim_x);
+
+    cudaEventCreate(&startcublas);
+    cudaEventCreate(&stopcublas);
+
+    // Init DCT
+    cudaEventRecord(startcublas);
+    dctCuBlas.dct(x_n, x_k);
+    cudaEventRecord(stopcublas);
+
+
+    float cublasTime;
+    cudaEventSynchronize(stopcublas);
+    cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
+    std::cout << "cublas took: " << cublasTime << std::endl;
+}
+
+
+void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k){
+    std::cout<< "cublas_dct" << std::endl;
+    // DCT
+    cudaEvent_t startcublas;
+    cudaEvent_t stopcublas;
+    DctCuBlas  dctCuBlas(dim_y, dim_x);
+
+    cudaEventCreate(&startcublas);
+    cudaEventCreate(&stopcublas);
+
+    // Init iDCT
+    cudaEventRecord(startcublas);
+    dctCuBlas.idct(x_k, x_n);
+    cudaEventRecord(stopcublas);
+
+
+    float cublasTime;
+    cudaEventSynchronize(stopcublas);
+    cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
+    std::cout << "cublas took: " << cublasTime << std::endl;
+}
+
 
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
@@ -69,33 +114,18 @@ int main(int argv, char** argc){
     thrust::device_vector<double> x_k(seq_size, 0.0);
     double *x_k_ptr = thrust::raw_pointer_cast(&x_k[0]);
 
-//    print_dvector(x_n, "x_n");
-//    print_dvector(x_k, "x_k");
-
     cudaMemcpy(x_n_ptr, x_n_host, sizeof(double)*size_m*size_n, cudaMemcpyHostToDevice);
-//    print_dvector(x_n, "x_n");
 
-    // DCT
-    cudaEvent_t startcublas;
-    cudaEvent_t stopcublas;
-    DctCuBlas  dctCuBlas(dim_y, dim_x);
-
-    cudaEventCreate(&startcublas);
-    cudaEventCreate(&stopcublas);
-
-
-    // Init DCT
-    cudaEventRecord(startcublas);
-    dctCuBlas.dct(x_n, x_k);
-    cudaEventRecord(stopcublas);
-
-
-    float cublasTime;
-    cudaEventSynchronize(stopcublas);
-    cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
-    std::cout << "cublas took: " << cublasTime << std::endl;
-
+    // Printing!
+    //    print_dvector(x_n, "x_n");
     //    print_dvector(x_k, "x_k");
+    //    print_dvector(x_n, "x_n");
+
+    // cublas
+    cublas_dct(dim_y, dim_x, x_n, x_k);
+
+    cublas_idct(dim_y, dim_x, x_n, x_k);
+
 
 
     delete[] x_n_host;
