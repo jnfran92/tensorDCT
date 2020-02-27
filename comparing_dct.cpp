@@ -18,6 +18,7 @@
 
 #include <thrust/device_vector.h>
 #include <cublas_v2.h>
+#include <cufft.h>
 #include <chrono>
 
 using namespace std::chrono;
@@ -104,6 +105,47 @@ void fftw_dct(int &dim_y, int &dim_x, double *x_n){
     auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
     std::cout << "fftw took[ms]: " << duration_t.count() << std::endl;
 }
+
+
+void cufft_dct(int &dim_y, int &dim_x, double *x_n){
+    std::cout<< "cufft_dct" << std::endl;
+    // FFTW two dimensions using m_line.dot(n_line) = x_n
+    fftw_complex *data_in, *data_out;
+    fftw_plan p;
+//    cufftComplex
+    // allocating data
+    data_in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * dim_x * dim_y);
+    data_out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * dim_x * dim_y);
+
+    // fill data
+//    std::cout<< "Data in FFTW -------------" << std::endl;
+    for (int i=0; i<dim_y; i++){
+        for (int j=0; j<dim_x; j++){
+            data_in[i*dim_x + j][0] = x_n[i*dim_x + j]; 	// real data
+            data_in[i*dim_x + j][1] = 0.0; 		// imaginary data
+//            std::cout << data_in[i*dim_y + j][0] << " - "<< data_in[i*dim_y + j][1] << std::endl;
+        }
+    }
+
+
+    p = fftw_plan_dft_2d(
+            dim_x,
+            dim_y,
+            data_in,
+            data_out,
+            FFTW_FORWARD,
+            FFTW_ESTIMATE);
+
+
+    auto start_global = high_resolution_clock::now();
+    // executing fft
+    fftw_execute(p);
+
+    auto stop_global = high_resolution_clock::now();
+    auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
+    std::cout << "fftw took[ms]: " << duration_t.count() << std::endl;
+}
+
 
 
 
