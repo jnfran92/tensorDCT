@@ -77,11 +77,11 @@ void fftw_dct(int &dim_y, int &dim_x, double *x_n){
     data_out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * dim_x * dim_y);
 
     // fill data
-    std::cout<< "Data in FFTW -------------" << std::endl;
-    for (int i=0; i<dim_x; i++){
-        for (int j=0; j<dim_y; j++){
-            data_in[i*dim_y + j][0] = x_n[i*dim_y + j]; 	// real data
-            data_in[i*dim_y + j][1] = 0.0; 		// imaginary data
+//    std::cout<< "Data in FFTW -------------" << std::endl;
+    for (int i=0; i<dim_y; i++){
+        for (int j=0; j<dim_x; j++){
+            data_in[i*dim_x + j][0] = x_n[i*dim_x + j]; 	// real data
+            data_in[i*dim_x + j][1] = 0.0; 		// imaginary data
 //            std::cout << data_in[i*dim_y + j][0] << " - "<< data_in[i*dim_y + j][1] << std::endl;
         }
     }
