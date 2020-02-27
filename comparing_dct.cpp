@@ -44,8 +44,8 @@ int main(int argv, char** argc){
     fill_vector_cos(3, size_m, m_line);
     fill_vector_cos(2, size_n, n_line);
 
-    print_array(m_line, size_m);
-    print_array(n_line, size_n);
+//    print_array(m_line, size_m);
+//    print_array(n_line, size_n);
 
     int M = size_m;
     int N = size_n;
@@ -58,8 +58,7 @@ int main(int argv, char** argc){
         }
     }
 
-
-    print_array(x_n_host , M, N);
+//    print_array(x_n_host , M, N);
 
 
     // GPU copies
@@ -70,18 +69,33 @@ int main(int argv, char** argc){
     thrust::device_vector<double> x_k(seq_size, 0.0);
     double *x_k_ptr = thrust::raw_pointer_cast(&x_k[0]);
 
-    print_dvector(x_n, "x_n");
-    print_dvector(x_k, "x_k");
+//    print_dvector(x_n, "x_n");
+//    print_dvector(x_k, "x_k");
 
     cudaMemcpy(x_n_ptr, x_n_host, sizeof(double)*size_m*size_n, cudaMemcpyHostToDevice);
-    print_dvector(x_n, "x_n");
+//    print_dvector(x_n, "x_n");
 
     // DCT
+    cudaEvent_t startcublas;
+    cudaEvent_t stopcublas;
     DctCuBlas  dctCuBlas(dim_y, dim_x);
-    // Init DCT
-    dctCuBlas.dct(x_n, x_k);
 
-    print_dvector(x_k, "x_k");
+    cudaEventCreate(&startcublas);
+    cudaEventCreate(&stopcublas);
+
+
+    // Init DCT
+    cudaEventRecord(startcublas);
+    dctCuBlas.dct(x_n, x_k);
+    cudaEventRecord(stopcublas);
+
+
+    float cublasTime;
+    cudaEventSynchronize(stopcublas);
+    cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
+    std::cout << "cublas took: " << cublasTime << std::endl;
+
+    //    print_dvector(x_k, "x_k");
 
 
     delete[] x_n_host;
