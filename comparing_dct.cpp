@@ -102,7 +102,7 @@ void fftw_dct(int &dim_y, int &dim_x, double *x_n){
 
     auto stop_global = high_resolution_clock::now();
     auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
-    std::cout << "Elapsed Time(time step update total)  " << duration_t.count() << " ms" << std::endl;
+    std::cout << "fftw took[ms]: " << duration_t.count() << std::endl;
 }
 
 
