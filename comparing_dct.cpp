@@ -2,6 +2,7 @@
 // Created by Juan Francisco on 2020-02-22.
 //
 #include <cstdio>
+#include <fftw3.h>
 //
 ////CBLAS
 //extern "C"
