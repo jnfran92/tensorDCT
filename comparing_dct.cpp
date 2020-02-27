@@ -38,7 +38,7 @@ void cublas_dct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thru
     float cublasTime;
     cudaEventSynchronize(stopcublas);
     cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
-    std::cout << "cublas took: " << cublasTime << std::endl;
+    std::cout << "cublas took[ms]: " << cublasTime << std::endl;
 }
 
 
@@ -61,15 +61,15 @@ void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thr
     float cublasTime;
     cudaEventSynchronize(stopcublas);
     cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
-    std::cout << "cublas took: " << cublasTime << std::endl;
+    std::cout << "cublas took[ms]: " << cublasTime << std::endl;
 }
 
 
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
 
-    int size_m = 1024;
-    int size_n = 2048;
+    int size_m = 4096;
+    int size_n = 4096;
 
     int dim_y = size_m;
     int dim_x = size_n;
@@ -120,7 +120,6 @@ int main(int argv, char** argc){
 
     // cublas
     cublas_dct(dim_y, dim_x, x_n, x_k);
-
     cublas_idct(dim_y, dim_x, x_n, x_k);
 
 
