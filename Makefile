@@ -1,5 +1,5 @@
 
-CUDA_LIBS = -lcublas
+CUDA_LIBS = -lcublas -lcufft
 C11 = -std=c++11
 
 # If are using UACH server use this
