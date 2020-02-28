@@ -210,7 +210,7 @@ int main(int argv, char** argc){
     cublas_dct(dim_y, dim_x, x_n, x_k);
     cublas_idct(dim_y, dim_x, x_n, x_k);
     fftw_dct(dim_y, dim_x, x_n_host);
-    cufft_dct(dim_y, dim_x, x_n);
+    cufft_dct(dim_y, dim_x, x_n_host);
 
 
 
