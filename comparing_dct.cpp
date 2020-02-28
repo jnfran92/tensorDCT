@@ -171,7 +171,7 @@ void cufft_float_fft(int &dim_y, int &dim_x, double *x_n){
 
 
 void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
-    std::cout<< "cufft_float_fft" << std::endl;
+    std::cout<< "cufft_double_fft" << std::endl;
     // FFTW two dimensions using m_line.dot(n_line) = x_n
     cufftDoubleComplex *data_in, *data_out;
     cufftDoubleComplex *data_in_d, *data_out_d;
