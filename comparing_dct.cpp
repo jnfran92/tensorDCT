@@ -107,8 +107,8 @@ void fftw_dct(int &dim_y, int &dim_x, double *x_n){
 }
 
 
-void cufft_dct(int &dim_y, int &dim_x, double *x_n){
-    std::cout<< "cufft_dct" << std::endl;
+void cufft_float_fft(int &dim_y, int &dim_x, double *x_n){
+    std::cout<< "cufft_float_fft" << std::endl;
     // FFTW two dimensions using m_line.dot(n_line) = x_n
     cufftComplex *data_in, *data_out;
     cufftComplex *data_in_d, *data_out_d;
@@ -170,6 +170,68 @@ void cufft_dct(int &dim_y, int &dim_x, double *x_n){
 
 
 
+void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
+    std::cout<< "cufft_float_fft" << std::endl;
+    // FFTW two dimensions using m_line.dot(n_line) = x_n
+    cufftDoubleComplex *data_in, *data_out;
+    cufftDoubleComplex *data_in_d, *data_out_d;
+
+    cudaEvent_t startcufft;
+    cudaEvent_t stopcufft;
+    cudaEventCreate(&startcufft);
+    cudaEventCreate(&stopcufft);
+
+
+    data_in = new cufftDoubleComplex[dim_x*dim_y];
+    data_out = new cufftDoubleComplex[dim_x*dim_y];
+
+//    std::cout<< "Data in FFTW -------------" << std::endl;
+    for (int i=0; i<dim_y; i++){
+        for (int j=0; j<dim_x; j++){
+            data_in[i*dim_x + j].x = x_n[i*dim_x + j]; 	// real data
+            data_in[i*dim_x + j].y = 0.0; 		// imaginary data
+//            std::cout << data_in[i*dim_y + j][0] << " - "<< data_in[i*dim_y + j][1] << std::endl;
+        }
+    }
+
+    // cuda stuff
+    cufftResult cufftResult_t;
+    cufftHandle plan;
+    cufftPlan2d(&plan, dim_x, dim_y, CUFFT_C2C);
+
+    cudaMalloc(&data_in_d, sizeof(cufftDoubleComplex)*dim_x*dim_y);
+    cudaMalloc(&data_out_d, sizeof(cufftDoubleComplex)*dim_x*dim_y);
+    cudaMemcpy(data_in_d, data_in, sizeof(cufftDoubleComplex)*dim_x*dim_y, cudaMemcpyHostToDevice);
+
+
+//    auto start_global = high_resolution_clock::now();
+    cudaEventRecord(startcufft);
+
+    cufftResult_t = cufftExecZ2Z(plan, (cufftDoubleComplex *)data_in_d, (cufftDoubleComplex *)data_out_d, CUFFT_FORWARD);
+    assert(cufftResult_t == CUFFT_SUCCESS);
+    cudaDeviceSynchronize();
+
+    cudaEventRecord(stopcufft);
+
+
+    float cublasTime;
+    cudaEventSynchronize(stopcufft);
+    cudaEventElapsedTime(&cublasTime, startcufft, stopcufft);
+    std::cout << "cufft took[ms]: " << cublasTime << std::endl;
+
+
+//    auto stop_global = high_resolution_clock::now();
+//    auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
+//    std::cout << "cuFFT took[ms]: " << duration_t.count() << std::endl;
+
+    cufftDestroy(plan);
+    cudaFree(data_in_d); cudaFree(data_out_d);
+    delete[](data_in);
+    delete[](data_out);
+}
+
+
+
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
 
@@ -227,7 +289,8 @@ int main(int argv, char** argc){
     cublas_dct(dim_y, dim_x, x_n, x_k);
     cublas_idct(dim_y, dim_x, x_n, x_k);
     fftw_dct(dim_y, dim_x, x_n_host);
-    cufft_dct(dim_y, dim_x, x_n_host);
+    cufft_float_fft(dim_y, dim_x, x_n_host);
+    cufft_double_fft(dim_y, dim_x, x_n_host);
 
 
 
