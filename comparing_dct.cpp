@@ -137,8 +137,11 @@ void cufft_dct(int &dim_y, int &dim_x, double *x_n){
 
 
     auto start_global = high_resolution_clock::now();
+
     cufftResult_t = cufftExecC2C(plan, (cufftComplex *)data_in_d, (cufftComplex *)data_out_d, CUFFT_FORWARD);
+    cudaDeviceSynchronize();
     assert(cufftResult_t == CUFFT_SUCCESS);
+
 
     auto stop_global = high_resolution_clock::now();
     auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
