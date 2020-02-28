@@ -113,6 +113,11 @@ void cufft_dct(int &dim_y, int &dim_x, double *x_n){
     cufftComplex *data_in, *data_out;
     cufftComplex *data_in_d, *data_out_d;
 
+    cudaEvent_t startcufft;
+    cudaEvent_t stopcufft;
+    cudaEventCreate(&startcufft);
+    cudaEventCreate(&stopcufft);
+
 
     data_in = new cufftComplex[dim_x*dim_y];
     data_out = new cufftComplex[dim_x*dim_y];
@@ -136,16 +141,25 @@ void cufft_dct(int &dim_y, int &dim_x, double *x_n){
     cudaMemcpy(data_in_d, data_in, sizeof(cufftComplex)*dim_x*dim_y, cudaMemcpyHostToDevice);
 
 
-    auto start_global = high_resolution_clock::now();
+//    auto start_global = high_resolution_clock::now();
+    cudaEventRecord(startcufft);
 
     cufftResult_t = cufftExecC2C(plan, (cufftComplex *)data_in_d, (cufftComplex *)data_out_d, CUFFT_FORWARD);
-    cudaDeviceSynchronize();
     assert(cufftResult_t == CUFFT_SUCCESS);
+    cudaDeviceSynchronize();
+
+    cudaEventRecord(stopcufft);
 
 
-    auto stop_global = high_resolution_clock::now();
-    auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
-    std::cout << "cuFFT took[ms]: " << duration_t.count() << std::endl;
+    float cublasTime;
+    cudaEventSynchronize(stopcufft);
+    cudaEventElapsedTime(&cublasTime, startcufft, stopcufft);
+    std::cout << "cufft took[ms]: " << cublasTime << std::endl;
+
+
+//    auto stop_global = high_resolution_clock::now();
+//    auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
+//    std::cout << "cuFFT took[ms]: " << duration_t.count() << std::endl;
 
     cufftDestroy(plan);
     cudaFree(data_in_d); cudaFree(data_out_d);
