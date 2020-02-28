@@ -173,8 +173,8 @@ void cufft_dct(int &dim_y, int &dim_x, double *x_n){
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
 
-    int size_m = 4096;
-    int size_n = 4096;
+    int size_m = 4096*4;
+    int size_n = 4096*4;
 
     int dim_y = size_m;
     int dim_x = size_n;
