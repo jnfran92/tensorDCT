@@ -126,7 +126,7 @@ void cufft_float_fft(int &dim_y, int &dim_x, double *x_n){
     for (int i=0; i<dim_y; i++){
         for (int j=0; j<dim_x; j++){
             data_in[i*dim_x + j].x = (float)x_n[i*dim_x + j]; 	// real data
-            data_in[i*dim_x + j].y = 0.0; 		// imaginary data
+            data_in[i*dim_x + j].y = 0.0f; 		// imaginary data
 //            std::cout << data_in[i*dim_y + j][0] << " - "<< data_in[i*dim_y + j][1] << std::endl;
         }
     }
@@ -197,7 +197,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
     // cuda stuff
     cufftResult cufftResult_t;
     cufftHandle plan;
-    cufftPlan2d(&plan, dim_x, dim_y, CUFFT_C2C);
+    cufftPlan2d(&plan, dim_x, dim_y, CUFFT_Z2Z);
 
     cudaMalloc(&data_in_d, sizeof(cufftDoubleComplex)*dim_x*dim_y);
     cudaMalloc(&data_out_d, sizeof(cufftDoubleComplex)*dim_x*dim_y);
