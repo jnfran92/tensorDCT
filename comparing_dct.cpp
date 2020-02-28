@@ -110,40 +110,44 @@ void fftw_dct(int &dim_y, int &dim_x, double *x_n){
 void cufft_dct(int &dim_y, int &dim_x, double *x_n){
     std::cout<< "cufft_dct" << std::endl;
     // FFTW two dimensions using m_line.dot(n_line) = x_n
-    fftw_complex *data_in, *data_out;
-    fftw_plan p;
-//    cufftComplex
-    // allocating data
-    data_in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * dim_x * dim_y);
-    data_out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * dim_x * dim_y);
+    cufftComplex *data_in, *data_out;
+    cufftComplex *data_in_d, *data_out_d;
 
-    // fill data
+
+    data_in = new cufftComplex[dim_x*dim_y];
+    data_out = new cufftComplex[dim_x*dim_y];
+
 //    std::cout<< "Data in FFTW -------------" << std::endl;
     for (int i=0; i<dim_y; i++){
         for (int j=0; j<dim_x; j++){
-            data_in[i*dim_x + j][0] = x_n[i*dim_x + j]; 	// real data
-            data_in[i*dim_x + j][1] = 0.0; 		// imaginary data
+            data_in[i*dim_x + j].x = (float)x_n[i*dim_x + j]; 	// real data
+            data_in[i*dim_x + j].y = 0.0; 		// imaginary data
 //            std::cout << data_in[i*dim_y + j][0] << " - "<< data_in[i*dim_y + j][1] << std::endl;
         }
     }
 
+    // cuda stuff
+    cufftResult cufftResult_t;
+    cufftHandle plan;
+    cufftPlan2d(&plan, dim_x, dim_y, CUFFT_C2C);
 
-    p = fftw_plan_dft_2d(
-            dim_x,
-            dim_y,
-            data_in,
-            data_out,
-            FFTW_FORWARD,
-            FFTW_ESTIMATE);
+    cudaMalloc(&data_in_d, sizeof(cufftComplex)*dim_x*dim_y);
+    cudaMalloc(&data_out_d, sizeof(cufftComplex)*dim_x*dim_y);
+    cudaMemcpy(data_in_d, data_in, sizeof(cufftComplex)*dim_x*dim_y, cudaMemcpyHostToDevice);
 
 
     auto start_global = high_resolution_clock::now();
-    // executing fft
-    fftw_execute(p);
+    cufftResult_t = cufftExecC2C(plan, (cufftComplex *)data_in_d, (cufftComplex *)data_out_d, CUFFT_FORWARD);
+    assert(cufftResult_t == CUFFT_SUCCESS);
 
     auto stop_global = high_resolution_clock::now();
     auto duration_t = duration_cast<milliseconds>(stop_global - start_global);
-    std::cout << "fftw took[ms]: " << duration_t.count() << std::endl;
+    std::cout << "cuFFT took[ms]: " << duration_t.count() << std::endl;
+
+    cufftDestroy(plan);
+    cudaFree(data_in_d); cudaFree(data_out_d);
+    delete[](data_in);
+    delete[](data_out);
 }
 
 
