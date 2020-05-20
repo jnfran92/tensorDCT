@@ -168,6 +168,9 @@ int main(int argv, char** argc){
     thrust::device_vector<double> x_k(seq_size, 0.0);
     double *x_k_ptr = thrust::raw_pointer_cast(&x_k[0]);
 
+    thrust::device_vector<double> x_tmp(seq_size, 0.0);
+    double *x_tmp_ptr = thrust::raw_pointer_cast(&x_tmp[0]);
+
     cudaMemcpy(x_n_ptr, x_n_host, sizeof(double)*size_m*size_n, cudaMemcpyHostToDevice);
 
     // Printing!
@@ -179,9 +182,8 @@ int main(int argv, char** argc){
     cublas_dct(dim_y, dim_x, x_n, x_k);
     print_dvector(x_k, "x_k");
 
-    cublas_idct(dim_y, dim_x, x_k, x_n);
-    print_dvector(x_n, "x_n");
-
+    cublas_idct(dim_y, dim_x, x_k, x_tmp);
+    print_dvector(x_tmp, "x_tmp");
 
 
 
