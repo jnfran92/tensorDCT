@@ -7,6 +7,8 @@
 #include "../test_libs/include/tools.h"
 #include "../include/dct/cublas/DctCuBlas.h"
 
+#include "../include/common_gpu_utils.h"
+
 #include <thrust/device_vector.h>
 #include <cublas_v2.h>
 #include <cufft.h>
@@ -117,6 +119,8 @@ int main(int argv, char** argc){
 
     // cublas
     cublas_dct(dim_y, dim_x, x_n, x_k);
+    print_dvector(x_n, "x_n");
+
     cublas_idct(dim_y, dim_x, x_n, x_k);
 
 
