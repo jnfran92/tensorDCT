@@ -79,12 +79,12 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
     data_in = new cufftDoubleComplex[dim_x*dim_y];
     data_out = new cufftDoubleComplex[dim_x*dim_y];
 
-//    std::cout<< "Data in FFTW -------------" << std::endl;
+    // std::cout<< "Data in FFTW -------------" << std::endl;
     for (int i=0; i<dim_y; i++){
         for (int j=0; j<dim_x; j++){
             data_in[i*dim_x + j].x = x_n[i*dim_x + j]; 	// real data
             data_in[i*dim_x + j].y = 0.0; 		// imaginary data
-//            std::cout << data_in[i*dim_y + j][0] << " - "<< data_in[i*dim_y + j][1] << std::endl;
+            // std::cout << data_in[i*dim_y + j][0] << " - "<< data_in[i*dim_y + j][1] << std::endl;
         }
     }
 
@@ -98,7 +98,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
     cudaMemcpy(data_in_d, data_in, sizeof(cufftDoubleComplex)*dim_x*dim_y, cudaMemcpyHostToDevice);
 
 
-//    auto start_global = high_resolution_clock::now();
+    // auto start_global = high_resolution_clock::now();
     cudaEventRecord(start_cufft);
 
     cufftResult_t = cufftExecZ2Z(plan, (cufftDoubleComplex *)data_in_d, (cufftDoubleComplex *)data_out_d, CUFFT_FORWARD);
@@ -107,11 +107,23 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
 
     cudaEventRecord(stop_cufft);
 
-
     float cublasTime;
     cudaEventSynchronize(stop_cufft);
     cudaEventElapsedTime(&cublasTime, start_cufft, stop_cufft);
     std::cout << "cufft took[ms]: " << cublasTime << std::endl;
+
+    // Copy data
+    cudaMemcpy(data_out_d, data_out, sizeof(cufftDoubleComplex)*dim_x*dim_y, cudaMemcpyDeviceToHost);
+
+     std::cout<< "Data Out in FFTW -------------" << std::endl;
+    for (int i=0; i<dim_y; i++){
+        for (int j=0; j<dim_x; j++){
+//            data_in[i*dim_x + j].x = x_n[i*dim_x + j]; 	// real data
+//            data_in[i*dim_x + j].y = 0.0; 		// imaginary data
+             std::cout << data_out[i*dim_y + j].x << "-"<< data_out[i*dim_y + j].y << " ";
+        }
+        std::cout << std::endl;
+    }
 
 
     cufftDestroy(plan);
@@ -124,7 +136,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
 
 
 int main(int argv, char** argc){
-    printf("Comparing DCT tensorcores , cublas and cufft\n");
+    printf("Comparing DCT cublas and cufft\n");
 
     int size_m = 16;
     int size_n = 8;
@@ -185,6 +197,7 @@ int main(int argv, char** argc){
     cublas_idct(dim_y, dim_x, x_k, x_tmp);
     print_dvector(x_tmp, "x_tmp");
 //    print_dvector(x_tmp, "x_tmp");
+
 
 
 
