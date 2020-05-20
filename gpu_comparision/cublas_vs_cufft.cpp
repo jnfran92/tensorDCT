@@ -119,10 +119,10 @@ int main(int argv, char** argc){
 
     // cublas
     cublas_dct(dim_y, dim_x, x_n, x_k);
-    print_dvector(x_n, "x_n");
+    print_dvector(x_k, "x_k");
 
     cublas_idct(dim_y, dim_x, x_n, x_k);
-
+//    print_dvector(x_k, "x_k");
 
 
     delete[] x_n_host;
