@@ -40,7 +40,7 @@ void cublas_dct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thru
 }
 
 
-void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k){
+void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_k, thrust::device_vector<double> &x_n){
     std::cout<< "cublas_idct" << std::endl;
     // DCT
     cudaEvent_t start_cublas;
@@ -182,7 +182,7 @@ int main(int argv, char** argc){
     cublas_dct(dim_y, dim_x, x_n, x_k);
     print_dvector(x_k, "x_k");
 
-    cublas_idct(dim_y, dim_x, x_n, x_tmp);
+    cublas_idct(dim_y, dim_x, x_k, x_tmp);
     print_dvector(x_tmp, "x_tmp");
 //    print_dvector(x_tmp, "x_tmp");
 
