@@ -20,22 +20,22 @@ using namespace std::chrono;
 void cublas_dct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k){
     std::cout<< "cublas_dct" << std::endl;
     // DCT
-    cudaEvent_t startcublas;
-    cudaEvent_t stopcublas;
+    cudaEvent_t start_cublas;
+    cudaEvent_t stop_cublas;
     DctCuBlas  dctCuBlas(dim_y, dim_x);
 
-    cudaEventCreate(&startcublas);
-    cudaEventCreate(&stopcublas);
+    cudaEventCreate(&start_cublas);
+    cudaEventCreate(&stop_cublas);
 
     // Init DCT
-    cudaEventRecord(startcublas);
+    cudaEventRecord(start_cublas);
     dctCuBlas.dct(x_n, x_k);
-    cudaEventRecord(stopcublas);
+    cudaEventRecord(stop_cublas);
 
 
     float cublasTime;
-    cudaEventSynchronize(stopcublas);
-    cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
+    cudaEventSynchronize(stop_cublas);
+    cudaEventElapsedTime(&cublasTime, start_cublas, stop_cublas);
     std::cout << "cublas took[ms]: " << cublasTime << std::endl;
 }
 
@@ -43,22 +43,22 @@ void cublas_dct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thru
 void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thrust::device_vector<double> &x_k){
     std::cout<< "cublas_idct" << std::endl;
     // DCT
-    cudaEvent_t startcublas;
-    cudaEvent_t stopcublas;
+    cudaEvent_t start_cublas;
+    cudaEvent_t stop_cublas;
     DctCuBlas  dctCuBlas(dim_y, dim_x);
 
-    cudaEventCreate(&startcublas);
-    cudaEventCreate(&stopcublas);
+    cudaEventCreate(&start_cublas);
+    cudaEventCreate(&stop_cublas);
 
     // Init iDCT
-    cudaEventRecord(startcublas);
+    cudaEventRecord(start_cublas);
     dctCuBlas.idct(x_k, x_n);
-    cudaEventRecord(stopcublas);
+    cudaEventRecord(stop_cublas);
 
 
     float cublasTime;
-    cudaEventSynchronize(stopcublas);
-    cudaEventElapsedTime(&cublasTime, startcublas, stopcublas);
+    cudaEventSynchronize(stop_cublas);
+    cudaEventElapsedTime(&cublasTime, start_cublas, stop_cublas);
     std::cout << "cublas took[ms]: " << cublasTime << std::endl;
 }
 
@@ -179,11 +179,12 @@ int main(int argv, char** argc){
     //    print_dvector(x_n, "x_n");
 
     // cublas
-    cublas_dct(dim_y, dim_x, x_n, x_k);
-    print_dvector(x_k, "x_k");
+//    cublas_dct(dim_y, dim_x, x_n, x_k);
+//    print_dvector(x_k, "x_k");
 
-    cublas_idct(dim_y, dim_x, x_k, x_tmp);
-    print_dvector(x_tmp, "x_tmp");
+    cublas_idct(dim_y, dim_x, x_n, x_k);
+    print_dvector(x_k, "x_k");
+//    print_dvector(x_tmp, "x_tmp");
 
 
 
