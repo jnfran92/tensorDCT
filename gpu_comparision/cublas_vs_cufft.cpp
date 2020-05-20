@@ -198,7 +198,7 @@ int main(int argv, char** argc){
     print_dvector(x_tmp, "x_tmp");
 //    print_dvector(x_tmp, "x_tmp");
 
-
+    cufft_double_fft(dim_y, dim_x, x_n_host);
 
 
     delete[] x_n_host;
