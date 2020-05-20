@@ -111,7 +111,7 @@ void DctCuBlas::dct(thrust::device_vector<double> &x_n, thrust::device_vector<do
 }
 
 void DctCuBlas::idct(thrust::device_vector<double> &x_k, thrust::device_vector<double> &x_n) {
-// naive idct
+    // naive idct
     dct(x_k, x_n);
     thrust::transform(
             x_n.begin(),
