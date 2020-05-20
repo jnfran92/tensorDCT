@@ -10,7 +10,7 @@
 #include <thrust/device_vector.h>
 #include <cublas_v2.h>
 #include <cufft.h>
-
+#include <chrono>
 
 using namespace std::chrono;
 
