@@ -66,8 +66,8 @@ void cublas_idct(int &dim_y, int &dim_x, thrust::device_vector<double> &x_n, thr
 int main(int argv, char** argc){
     printf("Comparing DCT tensorcores , cublas and cufft\n");
 
-    int size_m = 3000;
-    int size_n = 3000;
+    int size_m = 16;
+    int size_n = 8;
 
     int dim_y = size_m;
     int dim_x = size_n;
@@ -83,8 +83,8 @@ int main(int argv, char** argc){
     fill_vector_cos(3, size_m, m_line);
     fill_vector_cos(2, size_n, n_line);
 
-//    print_array(m_line, size_m);
-//    print_array(n_line, size_n);
+    print_array(m_line, size_m);
+    print_array(n_line, size_n);
 
     int M = size_m;
     int N = size_n;
@@ -97,7 +97,7 @@ int main(int argv, char** argc){
         }
     }
 
-//    print_array(x_n_host , M, N);
+    print_array(x_n_host , M, N);
 
 
     // GPU copies
