@@ -84,7 +84,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
         for (int j=0; j<dim_x; j++){
             data_in[i*dim_x + j].x = x_n[i*dim_x + j]; 	// real data
             data_in[i*dim_x + j].y = 0.0; 		// imaginary data
-             std::cout << "["<<data_in[i*dim_x + j].x << ", "<< data_in[i*dim_x + j].y << "]   ";
+//             std::cout << "["<<data_in[i*dim_x + j].x << ", "<< data_in[i*dim_x + j].y << "]   ";
         }
         std::cout << std::endl;
     }
@@ -118,11 +118,13 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
     cudaMemcpy(data_out, data_out_d, sizeof(cufftDoubleComplex)*dim_x*dim_y, cudaMemcpyDeviceToHost);
 
      std::cout<< "Data Out in FFTW -------------" << std::endl;
-    for (int i=0; i<dim_y; i++){
-        for (int j=0; j<dim_x; j++){
+//    for (int i=0; i<dim_y; i++){
+////        for (int j=0; j<dim_x; j++){
+    for (int i=0; i<10; i++){
+        for (int j=0; j<10; j++){
 //            data_in[i*dim_x + j].x = x_n[i*dim_x + j]; 	// real data
 //            data_in[i*dim_x + j].y = 0.0; 		// imaginary data
-             std::cout << "["<< data_out[i*dim_y + j].x << ","<< data_out[i*dim_y + j].y << "]   ";
+            std::cout << "["<<data_in[i*dim_x + j].x << ", "<< data_in[i*dim_x + j].y << "]   ";
         }
         std::cout << std::endl;
     }
@@ -194,10 +196,10 @@ int main(int argv, char** argc){
 
     // cublas
     cublas_dct(dim_y, dim_x, x_n, x_k);
-    print_dvector(x_k, "x_k");
+//    print_dvector(x_k, "x_k");
 
     cublas_idct(dim_y, dim_x, x_k, x_tmp);
-    print_dvector(x_tmp, "x_tmp");
+//    print_dvector(x_tmp, "x_tmp");
 //    print_dvector(x_tmp, "x_tmp");
 
     cufft_double_fft(dim_y, dim_x, x_n_host);
