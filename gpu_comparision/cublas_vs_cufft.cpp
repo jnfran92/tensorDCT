@@ -92,7 +92,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
     // cuda stuff
     cufftResult cufftResult_t;
     cufftHandle plan;
-    cufftPlan2d(&plan, dim_x, dim_y, CUFFT_Z2Z);
+    cufftPlan2d(&plan, dim_x, dim_y, CUFFT_C2C);
 
     cudaMalloc(&data_in_d, sizeof(cufftDoubleComplex)*dim_x*dim_y);
     cudaMalloc(&data_out_d, sizeof(cufftDoubleComplex)*dim_x*dim_y);
