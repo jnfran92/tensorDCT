@@ -115,7 +115,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
     std::cout << "cufft took[ms]: " << cublasTime << std::endl;
 
     // Copy data
-    cudaMemcpy(data_out_d, data_out, sizeof(cufftDoubleComplex)*dim_x*dim_y, cudaMemcpyDeviceToHost);
+    cudaMemcpy(data_out, data_out_d, sizeof(cufftDoubleComplex)*dim_x*dim_y, cudaMemcpyDeviceToHost);
 
      std::cout<< "Data Out in FFTW -------------" << std::endl;
     for (int i=0; i<dim_y; i++){
