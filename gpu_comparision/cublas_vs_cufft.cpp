@@ -159,8 +159,8 @@ int main(int argv, char** argc){
     fill_vector_cos(3, size_m, m_line);
     fill_vector_cos(2, size_n, n_line);
 
-    print_array(m_line, size_m);
-    print_array(n_line, size_n);
+//    print_array(m_line, size_m);
+//    print_array(n_line, size_n);
 
     int M = size_m;
     int N = size_n;
