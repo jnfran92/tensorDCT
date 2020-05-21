@@ -140,8 +140,8 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
 int main(int argv, char** argc){
     printf("Comparing DCT cublas and cufft\n");
 
-    int size_m = 16;
-    int size_n = 8;
+    int size_m = 1024;
+    int size_n = 1024;
 
     int dim_y = size_m;
     int dim_x = size_n;
