@@ -84,7 +84,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
         for (int j=0; j<dim_x; j++){
             data_in[i*dim_x + j].x = x_n[i*dim_x + j]; 	// real data
             data_in[i*dim_x + j].y = 0.0; 		// imaginary data
-             std::cout << "["<<data_in[i*dim_y + j].x << ", "<< data_in[i*dim_y + j].y << "]   ";
+             std::cout << "["<<data_in[i*dim_x + j].x << ", "<< data_in[i*dim_x + j].y << "]   ";
         }
         std::cout << std::endl;
     }
