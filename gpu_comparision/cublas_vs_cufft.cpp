@@ -86,7 +86,7 @@ void cufft_double_fft(int &dim_y, int &dim_x, double *x_n){
             data_in[i*dim_x + j].y = 0.0; 		// imaginary data
 //             std::cout << "["<<data_in[i*dim_x + j].x << ", "<< data_in[i*dim_x + j].y << "]   ";
         }
-        std::cout << std::endl;
+//        std::cout << std::endl;
     }
 
     // cuda stuff
