@@ -173,7 +173,7 @@ int main(int argv, char** argc){
         }
     }
 
-    print_array(x_n_host , M, N);
+//    print_array(x_n_host , M, N);
 
 
     // GPU copies
